@@ -1,6 +1,6 @@
 #!/bin/bash
 
 # 构建docker镜像
-APPLICATION_NAME=service-consumer
+APP_NAME=service-consumer
 
-docker build --build-arg APPLICATION_NAME=${APPLICATION_NAME} -t ${APPLICATION_NAME} .
+docker build --build-arg APPLICATION_NAME=${APP_NAME} -t ${APP_NAME} .
