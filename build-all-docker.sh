@@ -19,9 +19,9 @@ cp ${CurrentDir}/service-producer/build/libs/${ProducerJarName} ${DockerDir}
 #进入docker目录
 cd ${DockerDir}
 #构建消费者docker镜像
-${DockerDir}/build-consumer-docker.sh
+./build-consumer-docker.sh
 #构建生产者docker镜像
-${DockerDir}/build-producer-docker.sh
+./build-producer-docker.sh
 
 #清理jar包
 rm ${DockerDir}/${ConsumerJarName}
