@@ -63,6 +63,9 @@ RUN echo "127.0.1.1 $(hostname)" >> /etc/hosts
 
 USER $NB_USER
 
+#接收传递过来的参数
+ARG APPLICATION_NAME
+
 ENV WORK_DIR $USER_HOME/work
 ENV CONSUL_DIR $WORK_DIR/consul
 ENV CONSUL_BIN /usr/local/bin/consul
