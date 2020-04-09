@@ -4,4 +4,4 @@
 
 APP_NAME=service-producer
 
-docker run --net=host ${APP_NAME} -e "APPLICATION_NAME=${APP_NAME}"
+docker run --net=host ${APP_NAME} -e "APP_NAME=${APP_NAME}"
