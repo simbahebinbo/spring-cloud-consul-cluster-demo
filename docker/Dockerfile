@@ -6,7 +6,7 @@ USER root
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS yes
 
-#替换为阿里源
+#替换源
 ADD sources.list /etc/apt/sources.list
 
 #更新
