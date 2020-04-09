@@ -6,11 +6,11 @@ USER root
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS yes
 
+#替换为阿里源
+ADD sources.list /etc/apt/sources.list
+
 #更新
 RUN apt-get update && apt-get install --assume-yes apt-utils
-
-#升级
-RUN apt-get -y upgrade
 
 #安装程序依赖的包
 RUN apt-get install -yq --no-install-recommends build-essential
