@@ -1,0 +1,9 @@
+spring.application.name: service-producer
+
+spring.cloud.consul.enabled: false
+spring.cloud.consul.config.enabled: false
+spring.cloud.loadbalancer.ribbon.enabled: false
+
+logging.level:
+  root: INFO
+  org.springframework.cloud: INFO

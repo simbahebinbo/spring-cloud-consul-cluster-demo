@@ -1,0 +1,8 @@
+rootProject.name = 'spring-cloud-consul-cluster-demo'
+
+include 'service-common'
+
+include 'service-producer'
+include 'service-consumer'
+
+

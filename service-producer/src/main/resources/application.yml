@@ -1,0 +1,8 @@
+server.port: 9900
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: refresh,health

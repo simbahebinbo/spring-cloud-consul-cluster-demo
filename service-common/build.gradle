@@ -1,0 +1,56 @@
+buildscript {
+    ext {
+
+    }
+
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        jcenter()
+    }
+
+    dependencies {
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    jcenter()
+}
+
+group 'com.github.lansheng228'
+version = projectVersion
+archivesBaseName = 'service-common'
+description = '公共模块'
+
+dependencies {
+    implementation("commons-io:commons-io:$commonsioVersion")
+    implementation("org.apache.commons:commons-lang3:$commonslang3Version")
+    implementation("commons-beanutils:commons-beanutils:$commonsbeanutilsVersion")
+    implementation("commons-codec:commons-codec:$commonscodecVersion")
+    implementation("org.apache.commons:commons-compress:$commonsCompressVersion")
+    implementation("com.google.code.gson:gson:$gsonVersion")
+
+    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
+
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+
+    testImplementation("org.awaitility:awaitility:$awaitilityVersion")
+    testImplementation("org.awaitility:awaitility-proxy:$awaitilityProxyVersion")
+}
+
+
+

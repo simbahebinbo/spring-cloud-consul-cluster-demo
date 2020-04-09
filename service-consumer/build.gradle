@@ -1,0 +1,82 @@
+buildscript {
+    ext {
+
+    }
+
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath("io.spring.gradle:dependency-management-plugin:${gradleDMVersion}")
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'application'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+
+
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    jcenter()
+}
+
+mainClassName = 'com.github.lansheng228.consumer.ServiceConsumerApplication'
+group 'com.github.lansheng228'
+version = projectVersion
+archivesBaseName = 'service-consumer'
+description = '消费者'
+
+
+dependencies {
+    implementation project(':service-common')
+
+    implementation "org.springframework.boot:spring-boot-starter:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+    implementation("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
+    implementation "org.springframework.boot:spring-boot-starter-logging:$springBootVersion"
+    implementation("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
+
+    implementation("org.springframework.cloud:spring-cloud-starter:$springCloudVersion")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:$springCloudVersion")
+
+    implementation("com.github.lansheng228:spring-cloud-starter-consul-cluster:$springCloudConsulClusterVersion")
+
+    implementation("com.squareup.okhttp3:okhttp:$okhttp3Version")
+
+    implementation("commons-io:commons-io:$commonsioVersion")
+    implementation("org.apache.commons:commons-lang3:$commonslang3Version")
+    implementation("commons-beanutils:commons-beanutils:$commonsbeanutilsVersion")
+    implementation("commons-codec:commons-codec:$commonscodecVersion")
+    implementation("org.apache.commons:commons-compress:$commonsCompressVersion")
+    implementation("com.google.guava:guava:$guavaVersion")
+    implementation("com.google.code.gson:gson:$gsonVersion")
+
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+
+    testImplementation("org.awaitility:awaitility:$awaitilityVersion")
+    testImplementation("org.awaitility:awaitility-proxy:$awaitilityProxyVersion")
+}
+
+
+
+
+
+

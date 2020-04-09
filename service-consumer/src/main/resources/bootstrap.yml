@@ -1,0 +1,43 @@
+server.tomcat.max-threads: 0
+server.tomcat.uri-encoding: UTF-8
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud: INFO
+
+spring:
+  application:
+    name: service-consumer
+  profiles:
+    active: local
+    include:
+      - default
+
+spring.cloud.consul.cluster.nodes: ${CONSUL_NODES}
+
+#consul配置
+#https://cloud.spring.io/spring-cloud-consul/reference/html/appendix.html
+
+#服务不可用时自动剔除,超时时间设为10秒
+spring.cloud.consul.discovery.deregister: true
+spring.cloud.consul.discovery.health-check-timeout: 10s
+spring.cloud.consul.discovery.health-check-critical-timeout: 10s
+#实例ID
+spring.cloud.consul.discovery.instanceId: ${spring.application.name}:${spring.profiles.active}:${spring.cloud.client.ip-address}:${server.port}
+#使用IP而不是hostname
+spring.cloud.consul.discovery.prefer-ip-address: true
+#注册到consul的服务名
+spring.cloud.consul.discovery.serviceName: ${spring.application.name}-${spring.profiles.active}
+spring.cloud.consul.discovery.health-check-path:  /health
+
+#spring cloud consul config的配置
+spring.cloud.consul.config.prefix: config
+spring.cloud.consul.config.enabled: true
+spring.cloud.consul.config.format: YAML
+spring.cloud.consul.config.data-key: ${spring.application.name}
+spring.cloud.consul.config.watch.enabled: true
+
+#支持熔断跳转
+feign.hystrix.enabled: true
+

@@ -1,0 +1,103 @@
+buildscript {
+    ext {
+
+    }
+
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        jcenter()
+    }
+    dependencies {
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    // java编译的时候缺省状态下会因为中文字符而失败
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    version = projectVersion
+    group = 'com.github.lansheng228'
+    description = '使用spring-cloud-starter-consul-cluster的样例程序'
+
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        jcenter()
+    }
+
+    configurations {
+        // 所有需要忽略的包定义在此
+
+    }
+
+    dependencies {
+        // 通用依赖
+
+    }
+
+    wrapper {
+        gradleVersion = '6.2.1'
+        distributionType = Wrapper.DistributionType.ALL
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+        options.compilerArgs << "-Xlint:unchecked"
+        options.compilerArgs << "-Xlint:deprecation"
+    }
+
+    tasks.withType(Test) {
+        testLogging {
+            events 'started', 'passed'
+        }
+    }
+
+    compileJava {
+        options.compilerArgs << '-Xlint:deprecation' << '-Xlint:unchecked'
+    }
+}
+
+subprojects {
+    dependencies {
+
+    }
+
+    compileJava {
+        options.compilerArgs << '-Xlint:deprecation' << '-Xlint:unchecked'
+    }
+
+    apply from: "$rootDir/gradle/config/scripts/coverage.gradle"
+
+    coverage.excludePackages = [
+
+    ]
+
+    coverage.excludeClasses = [
+    ]
+
+    test {
+        testLogging.showStandardStreams = true
+        useJUnitPlatform()
+    }
+}
+
+apply from: "$rootDir/gradle/config/scripts/idea.gradle"
+apply from: "$rootDir/gradle/config/scripts/coverage.gradle"
+
+test {
+    testLogging.showStandardStreams = true
+    useJUnitPlatform()
+}
+
+
