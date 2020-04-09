@@ -1,6 +1,6 @@
 #!/bin/bash
 
 #启动docker
-APPLICATION_NAME=service-consumer
+APP_NAME=service-consumer
 
-docker run --net=host ${APPLICATION_NAME}
+docker run --net=host ${APP_NAME} -e "APPLICATION_NAME=${APP_NAME}"

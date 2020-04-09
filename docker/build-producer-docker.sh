@@ -4,4 +4,4 @@
 
 APP_NAME=service-producer
 
-docker build --build-arg APPLICATION_NAME=${APP_NAME} -t ${APP_NAME} .
+docker build -t ${APP_NAME} .
