@@ -2,6 +2,6 @@
 
 #启动docker
 
-APP_NAME=service-producer
+APPLICATION_NAME=service-producer
 
-docker run --net=host ${APP_NAME} -e "APP_NAME=${APP_NAME}"
+docker run --net=host ${APPLICATION_NAME}

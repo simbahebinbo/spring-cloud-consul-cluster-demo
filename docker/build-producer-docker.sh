@@ -2,6 +2,6 @@
 
 # 构建docker镜像
 
-APP_NAME=service-producer
+APPLICATION_NAME=service-producer
 
-docker build --build-arg APPLICATION_NAME=${APP_NAME} -t ${APP_NAME} .
+docker build --build-arg APP_NAME=${APPLICATION_NAME} -t ${APPLICATION_NAME} .
