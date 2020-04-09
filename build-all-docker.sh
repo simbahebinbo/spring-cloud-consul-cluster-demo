@@ -23,7 +23,7 @@ cd ${DockerDir}
 #构建生产者docker镜像
 ./build-producer-docker.sh
 #退出docker目录
-cd -
+cd ${CurrentDir}
 
 #清理jar包
 rm ${DockerDir}/${ConsumerJarName}
