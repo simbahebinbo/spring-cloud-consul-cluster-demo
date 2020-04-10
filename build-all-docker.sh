@@ -8,6 +8,7 @@ CONSUMER_APPLICATION_NAME=service-consumer
 PRODUCER_APPLICATION_NAME=service-producer
 
 #编译打包
+gradle wrapper
 find ${CurrentDir} -name "build" | xargs rm -rf
 find ${CurrentDir} -name "out" | xargs rm -rf
 ${CurrentDir}/gradlew clean build -x test
