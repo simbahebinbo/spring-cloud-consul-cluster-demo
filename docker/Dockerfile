@@ -33,6 +33,7 @@ RUN apt-get install -yq --no-install-recommends openjdk-8-jdk
 #网络
 RUN apt-get install -yq --no-install-recommends iputils-ping
 RUN apt-get install -yq --no-install-recommends net-tools
+RUN apt-get install -yq --no-install-recommends iproute2
 
 #中文支持
 RUN apt-get install -yq --no-install-recommends locales
@@ -69,9 +70,9 @@ ARG APP_NAME
 ENV WORK_DIR=$USER_HOME/work
 ENV CONSUL_DIR=$WORK_DIR/consul
 ENV CONSUL_BIN=/usr/local/bin/consul
-ENV APPLICATION_VERSION=1.0.0
-ENV APPLICATION_NAME=$APP_NAME
-ENV APPLICATION_PACKAGE_NAME=$APPLICATION_NAME-$APPLICATION_VERSION.jar
+ENV APP_VERSION=1.0.0
+ENV APP_NAME=$APP_NAME
+ENV APP_PACKAGE=$APP_NAME-$APP_VERSION.jar
 ENV RUN_SHELL=run.sh
 
 # Setup jovyan home directory
@@ -94,8 +95,8 @@ ADD $RUN_SHELL $WORK_DIR/$RUN_SHELL
 RUN sudo chmod +x $WORK_DIR/$RUN_SHELL && sudo chgrp $NB_USER $WORK_DIR/$RUN_SHELL && sudo chown $NB_USER $WORK_DIR/$RUN_SHELL
 
 #添加jar包
-ADD $APPLICATION_PACKAGE_NAME $WORK_DIR/$APPLICATION_PACKAGE_NAME
-RUN sudo chgrp $NB_USER $WORK_DIR/$APPLICATION_PACKAGE_NAME && sudo chown $NB_USER $WORK_DIR/$APPLICATION_PACKAGE_NAME
+ADD $APP_PACKAGE $WORK_DIR/$APP_PACKAGE
+RUN sudo chgrp $NB_USER $WORK_DIR/$APP_PACKAGE && sudo chown $NB_USER $WORK_DIR/$APP_PACKAGE
 
 #暴露端口
 EXPOSE 8300/tcp 8301/tcp 8301/udp 8302/tcp 8302/udp 8500/tcp 8600/tcp 8600/udp
@@ -104,7 +105,7 @@ EXPOSE 8300/tcp 8301/tcp 8301/udp 8302/tcp 8302/udp 8500/tcp 8600/tcp 8600/udp
 VOLUME $CONSUL_DIR
 
 #启动
-CMD $SHELL $WORK_DIR/$RUN_SHELL ${CONSUL_BIN} ${WORK_DIR} ${CONSUL_DIR} ${APPLICATION_NAME} ${APPLICATION_VERSION}
+CMD $SHELL $WORK_DIR/$RUN_SHELL ${CONSUL_BIN} ${WORK_DIR} ${CONSUL_DIR} ${APP_NAME} ${APP_VERSION}
 
 
 
