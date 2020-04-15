@@ -3,4 +3,4 @@
 #启动docker
 APPLICATION_NAME=service-consumer
 
-docker run --net=host ${APPLICATION_NAME}
+docker run -d --net=host ${APPLICATION_NAME}
