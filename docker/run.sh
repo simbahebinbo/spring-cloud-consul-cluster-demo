@@ -21,8 +21,8 @@ NODE_IP=$(ifconfig ${ADDR} | grep inet | grep -v ${LOCAL_IP} | grep -v inet6 | a
 #启动应用程序
 JAVA_EXEC_SCRIPT="java -jar "
 JAVA_EXEC_SCRIPT=${JAVA_EXEC_SCRIPT}" -DCONSUL_NODES=127.0.0.1:8500,"${CONSUL_SERVERS}
-JAVA_EXEC_SCRIPT=${JAVA_EXEC_SCRIPT}" app.jar > /dev/null 2>&1 &"
-nohup ${JAVA_EXEC_SCRIPT}
+JAVA_EXEC_SCRIPT=${JAVA_EXEC_SCRIPT}" app.jar "
+nohup ${JAVA_EXEC_SCRIPT} > /dev/null 2>&1 &
 
 #启动consul
 # 只允许当前ip注册，即只允许该容器内的应用程序注册到该consul节点
