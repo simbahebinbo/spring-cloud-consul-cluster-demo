@@ -20,7 +20,7 @@ NODE_IP=$(ifconfig ${ADDR} | grep inet | grep -v ${LOCAL_IP} | grep -v inet6 | a
 
 #启动应用程序
 JAVA_EXEC_SCRIPT="java "
-JAVA_EXEC_SCRIPT=${JAVA_EXEC_SCRIPT}" -DCONSUL_NODES=127.0.0.1:8500,"${CONSUL_SERVERS}
+JAVA_EXEC_SCRIPT=${JAVA_EXEC_SCRIPT}" -DCONSUL_NODES=localhost:8500,"${CONSUL_SERVERS}
 JAVA_EXEC_SCRIPT=${JAVA_EXEC_SCRIPT}" -jar app.jar "
 nohup ${JAVA_EXEC_SCRIPT} > /dev/null 2>&1 &
 
