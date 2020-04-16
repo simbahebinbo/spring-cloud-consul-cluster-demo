@@ -12,6 +12,8 @@ CONSUL_DIR=$3
 APP_NAME=$4
 #应用程序版本号
 APP_VERSION=$5
+#consul集群的 server agent 链表
+CONSUL_SERVERS=$6
 #应用程序包名
 APP_PACKAGE=${APP_NAME}-${APP_VERSION}.jar
 #节点名
@@ -25,20 +27,20 @@ LOCAL_IP=127.0.0.1
 NODE_IP=$(ifconfig ${ADDR} | grep inet | grep -v ${LOCAL_IP} | grep -v inet6 | awk '{print $2}' | tr -d "addr:")
 
 #启动应用程序
-nohup java -jar  \
--DCONSUL_NODES=127.0.0.1:8500,172.18.18.141:8500,172.18.18.142:8500,172.18.18.143:8500,172.18.18.144:8500,172.18.18.145:8500,172.18.18.146:8500 \
-${APP_PACKAGE} \
-> /dev/null 2>&1 &
+EXEC_SCRIPT="java -jar "
+EXEC_SCRIPT=${EXEC_SCRIPT}" -DCONSUL_NODES=127.0.0.1:8500,"${CONSUL_SERVERS}
+EXEC_SCRIPT=${EXEC_SCRIPT}" "${APP_PACKAGE}" > /dev/null 2>&1 &"
+nohup ${EXEC_SCRIPT}
 
 #启动consul
 # 只允许当前ip注册，即只允许该容器内的应用程序注册到该consul节点
 # 以 client 模式启动
 # 加入到 server 模式 的节点组成的集群
-exec ${CONSUL_BIN} agent \
--bootstrap-expect=0 \
--advertise=${NODE_IP} -bind=${NODE_IP} -client=${LOCAL_IP} \
--node=${NODE_NAME} \
--data-dir=${CONSUL_DIR}/data \
--log-file=${CONSUL_DIR}/log/${APP_NAME}.log -log-level=INFO \
--join=172.18.18.141 -join=172.18.18.142 -join=172.18.18.143 -join=172.18.18.144 -join=172.18.18.145 -join=172.18.18.146
+EXEC_SCRIPT="${CONSUL_BIN} agent -bootstrap-expect=0 -advertise=${NODE_IP} -bind=${NODE_IP} -client=${LOCAL_IP} -node=${NODE_NAME} -data-dir=${CONSUL_DIR}/data -log-file=${CONSUL_DIR}/log/${APP_NAME}.log -log-level=INFO"
 
+for consul_server in $(echo ${CONSUL_SERVERS} | tr ',' ' '); do
+  SERVER_IP=$(echo ${consul_server} | awk -F: '{print $1}')
+  EXEC_SCRIPT=${EXEC_SCRIPT}" -join="${SERVER_IP}
+done
+
+exec ${EXEC_SCRIPT}
