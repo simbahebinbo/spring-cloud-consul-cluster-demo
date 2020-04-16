@@ -25,10 +25,9 @@ LOCAL_IP=127.0.0.1
 NODE_IP=$(ifconfig ${ADDR} | grep inet | grep -v ${LOCAL_IP} | grep -v inet6 | awk '{print $2}' | tr -d "addr:")
 
 #启动应用程序
-java -jar  \
+nohup java -jar  \
 -DCONSUL_NODES=127.0.0.1:8500,172.18.18.141:8500,172.18.18.142:8500,172.18.18.143:8500,172.18.18.144:8500,172.18.18.145:8500,172.18.18.146:8500 \
-${APP_PACKAGE} \
-> /dev/null 2>&1 &
+${APP_PACKAGE} &
 
 #启动consul
 # 只允许当前ip注册，即只允许该容器内的应用程序注册到该consul节点
